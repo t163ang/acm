@@ -1,0 +1,199 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 8.0">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+<ol>
+
+<li>
+    <p>
+    <h3>poj 1020</h3>
+    <strong>题意:</strong><br />
+    一块正方形蛋糕，问是否可以不浪费地按切成n块正方法小蛋糕。<br />
+    <strong>解题心得：</strong><br />
+    大蛋糕可以看成s * s的网格，蛋糕则看成 m * m（0 < m < s）方格。搜索方法可以是1、对n块小蛋糕，枚举它在哪里被切，重要地，也可以
+    2、对大蛋糕的每一格，枚举是属于第几块小蛋糕。3、任选1方格，任选1蛋糕，只要不重复就行了，即搜索s * s * n种的每一种可能。
+    表面上这样的枚举是一样的，都有s * s * n种可能。但是经此题我发现，事实并不是如此。
+    使用1方法，搜索宽度大，深度小，相反使用2方法，搜索宽度小，深度大。<br />
+    解这题还有个小技巧就是，对于相同大小的小蛋糕，它们是等同的，如果一个判断出是不能被切，则不能判断其实相同大小的小蛋糕了。因此使用了
+    记录相同大小个数方法，而不是记录每一个小蛋糕的大小。<br />
+    还有，就是看题后，应该能将题目问题用自己的话以最简短的方式表达出来，并再次看题研究是否遗漏了条件要求。并进行抽象，以便方式是否做过类似题目。
+    再想出一种方案后，一定要进行可行性分析。
+    </p>
+</li>
+
+<li>
+    <p>
+    <h3>poj1167</h3>
+    <h5>记下了我的解题思路，希望能组织起来，发展成一个学科</h5>
+    <pre>
+    //var:
+//m?router <= 17
+//n buses  <= 300
+//
+//condition:
+//Buses on the same route arrive at regular intervals 
+//Each bus route stops at least 2 times. 
+//
+//what is 1 router:
+//Buses on the same route arrive at regular intervals 
+//
+//oh,I see. method:
+//枚举每2个bus之间interval
+//
+//abstract:
+//即求最小等差数列。
+    </pre>
+    </p>
+    <p>
+        顺便写一下，在学了面向对象分析与设计时，我想出一个面向构件程序方法：
+            将有关联的类封装起来成一构件，构件通过它们之间的接口以及通过Connecter类进行通信。
+    </p>
+</li>
+
+<li>
+<h3>poj1256 \ poj1318常用函数</h3>
+<p>
+产生下一个排列：next_permutation(a,a + n,cmp);
+</p>
+<p>
+c的快速排序: qsort(a,n,sizeof(a[0]),cmp);
+</p>
+</li>
+
+<li>
+<h3>poj1324</h3>
+<h4>题意</h4>
+<p>一条蛇以最短路径出洞</p>
+<h4>总结</h4>
+<p>
+这题学会使用用二进制位表示状态方法，题目中蛇的最大长度是8,只要用2位来表示前一位的方向，即使用2 * 7即可以记录
+蛇的状态了。由于用2 * 7 = 14位所以有状态数是2^15 -1。这样状态压缩方式，可以使用14位,即用1个整数即可以表示好几个状态。<br />
+以前计算bfs最短长度总是用pre数组，现在才发现可以在node结点存储当前扩展的深度，这个深度值A星算法也是要用到的。
+</p>
+</li>
+
+
+<li>
+<h3>最小费用最大流</h3>
+<h4>问题：为什么每次使用连续最短路算法增广</h4>
+<p>
+    首先，可行流x为最小费用流的充要条件是残留网络不存在负费增广圈。
+    由于使用最短路算法，所以当出现负费圈时，最短路必然经过负费圈。
+</p>
+<p>
+    这类问题经常转换为k次走图，求最大值。k其实限定了最大流，最大值使用费用表示。
+</p>
+</li>
+
+<li>
+<h3>poj 1815</h3>
+<p>
+这题是求割点集的，但是这个好像不是求所有割点集中，顶点数量最小的一种（即最小割点集），而是求在割点集中分数（题目要求）最小的。
+方法是这样的：将每一个顶点拆分成i i',并有c(i,i') = 1;从小至大枚举每一个顶点，求最大流若变小了，说明它是当前最大流的割点，将这边删掉，同时将当前最大流量减少。
+为什么要不断地删顶点并减少最大流呢?而不是将当前最大流所有满流都删除呢？当前最大流的满流边是割边，但是顶点之间是有联系的，若删除了一个割点，可能就导致了其它豁点失效。
+讲得不清楚，总之要不断减流，直到源和汇不连通，就可找到其中一个豁点集。
+</p>
+</li>
+
+<li>
+<h3>poj 3469</h3>
+<p>
+最小割，n个任务用n个点表示。
+s和n个点连接，容量是Ai，n个点和t连接，容量是Bi。
+对于每个abc，a连接b，容量c，b连接a，容量c。
+</p>
+<p>
+problem: 一系列任务要在双核CPU上完成, 每个任务有各自在每个CPU上的基本花费, 不同任务之间若不在同一个CPU上要有额外花费, 求分配方案使得总花费最小, 任务数n<=20000, 额外花费种树m<=200000. 
+solution: 建图求最小边割. 
+这是一题很著名的用来测最大流算法效率的题目, 一般用增量算法, Dinic, SAP(ISAP), 本质上都是一样的, 只是一些优化方法的差异. 
+建图的方法应该算是套路了, 首先想到要取出两堆点, 分别运行在不同的核上, 并且基本花费和不在同一个核上的额外花费之和要最小, 很容易想到把每对额外花费看成是点, 现在要做一个划分, 取最优值. 而网络流问题中的点权往往要转换成边权, 特别是到源点和汇点的边权, 加上源点汇点, 使源点到每个任务的弧的权为其在1号核上的花费, 汇点那边反之. 由最小割(以下均指边割)定义, s和t之间必定不存在通路, 即对于原图中的一条路径s->u->v->t, <s,u>,<u,v>,<v,t>至少有一个在最小割中, 又每个任务都和s,t相连, 所以对于任务u, 必然<s,u>,<u,t>至少有一个在最小割中, 所以此图的最小割即为所求. 
+</p>
+</li>
+</ol>
+
+<p>
+<h3>边有约束图</h3>
+<pre>
+/*
+边有约束图
+还有一种解法，是用枚举 + bfs
+因为只有9、99、。。。。999999999九种可能，所以可以将这些边限制枚举出来，再构图。
+并利用bfs求连通
+*/
+#include <cstdio>
+#include <queue>
+using namespace std;
+
+const int maxn = 1010;
+const int maxm = 100010;
+const int Ma = 999999999;
+const int Mi = 9;
+int n, m;
+
+struct Edge{
+	int v, cost, next;
+}et[maxm];
+int eh[maxn], tot;
+
+bool vist[maxn];
+
+void add(int u, int v, int cost) {
+	Edge e = {v, cost, eh[u]};
+	et[tot] = e;
+	eh[u] = tot++;
+}
+
+bool bfs(int x) {
+	queue<int> que;
+	memset(vist, false, sizeof(vist));
+	que.push(1);
+	vist[1] = true;
+	while (!que.empty()) {
+		int u = que.front();
+		que.pop();
+		for (int i = eh[u]; i !=-1; i = et[i].next) {
+			int v = et[i].v, cost = et[i].cost;
+			if (!vist[v] && cost >= x) {
+				if (v == n) return true;
+				vist[v] = true;
+				que.push(v);
+			}
+		}
+	}
+	return false;
+}
+
+void solve() {
+	int res = 9;
+	for (int x = Mi; x <= Ma; x = x * 10 + 9)
+		if (bfs(x) == true) res = x;
+	printf("%d\n", res);
+}
+
+int main() {
+	int T;
+	scanf("%d", &T);
+	int a, b, c;
+	while (T--) {
+		memset(eh, -1, sizeof(eh));
+		tot = 0;
+		scanf("%d %d", &n, &m);
+		for (int i = 1; i <= m; i++) {
+			scanf("%d %d %d", &a, &b, &c);
+			add(a, b, c), add(b, a, c);
+		}
+		solve();
+	}
+	return 0;
+}
+</pre>
+</p>
+<p>
+<h3>图上dp</h3>
+由题可知dp[v]=max(min(dp[u],w[u][v]),dp[v])而这个是在图上dp的，
+可以使用spfa算法将dp[v]看成dist[v]即是最短路问题。
+</p>
+</BODY>
+</HTML>

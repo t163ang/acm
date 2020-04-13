@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 8.0">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+
+<ol>
+<li>
+<h3><font color=blue>线性筛素数</font></h3>
+<font color=purple>算法思想:</font><br />
+代码中体现在：<br />
+if(i%pr[j]==0)break;<br />
+pr数组中的素数是递增的,当i能整除pr[j]，那么i*pr[j+1]这个合数肯定被pr[j]乘以某个数筛掉。
+因为i中含有pr[j],pr[j]比pr[j+1]小。接下去的素数同理。所以不用筛下去了。
+在满足i%pr[j]==0这个条件之前以及第一次满足改条件时,<font color = blue>pr[j]必定是pr[j]*i的最小因子</font>。
+<br />
+<font color=purple>心得:</font><br />
+当 i * pr[j] == 0 时可以停止，是因为合数i * pr[j + 1]可以被x * pr[j]筛掉。证明：<br />
+i * pr[j + 1] = （k * pr[j]）* pr[j + 1] = pr[j] * (k * pr[j + 1])<br />
+令<br />
+i = k * pr[j]<br />
+x = k * pr[j + 1]<br />
+因为<br />
+pr[j] < pr[j + 1]<br />
+所以  <br />
+i < x<br />
+所以 <br />
+i * pr[j + 1] 会被比i大的x * pr[j]筛去掉。<br />
+
+</li>
+</ol>
+
+</BODY>
+</HTML>
